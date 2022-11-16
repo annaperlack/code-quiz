@@ -28,6 +28,8 @@ var questions = [
     }
 ]
 
+var currentQuestionIndex = 0;
+
 var startSection = document.getElementById('start-screen')
 var startButton = document.getElementById('start');
 
@@ -37,33 +39,75 @@ var questionChoices = document.getElementById('choices')
 
 var endSection = document.getElementById('end-screen')
 
+function getCurrentQuestion() {
+    return questions[currentQuestionIndex]
+}
 
-startButton.onclick = startQuiz;
+
+function setNextQuestion() {
+    currentQuestionIndex++
+    // if index is greater than number of questions then end quiz
+    if (currentQuestionIndex > questions.length-1) {
+        endQuiz()
+    }
+    else {
+        displayCurrentQuestion()  
+    }
+}
+
+function displayCurrentQuestion() {
+    // remove any existing choice buttons, if any
+    questionChoices.innerHTML = ''
+
+     // get current question
+     var currentQuestion = getCurrentQuestion()
+
+     // set current question title and options in the html
+     questionTitle.textContent = currentQuestion.title
+     for (var i = 0; i < currentQuestion.options.length; i++) {
+         var option = currentQuestion.options[i]
+ 
+         // create button for each option
+         var optionButton = document.createElement("button");
+         optionButton.innerHTML = option
+ 
+         // add button to options div
+         questionChoices.appendChild(optionButton)
+     }
+}
 
 function startQuiz() {
-    // Start with 1st question index
-    var currentQuestionIndex = 0;
-
     // hide initial section
     startSection.setAttribute('class', 'hide');
 
     // show quiz section
     quizSection.removeAttribute('class')
 
-    // get current question
-    var currentQuestion = questions[currentQuestionIndex]
+    displayCurrentQuestion()
+}
+
+function answerQuestion(event) {
+    var answer = event.target.innerHTML
     
-    // set current question title and options in the html
-    questionTitle.textContent = currentQuestion.title
-    for (var i = 0; i < currentQuestion.options.length; i++) {
-        var option = currentQuestion.options[i]
-
-        // create button for each option
-        var optionButton = document.createElement("button");
-        optionButton.innerHTML = option
-
-        // add button to options div
-        questionChoices.appendChild(optionButton)
+    var currentQuestion = getCurrentQuestion()
+    if (currentQuestion.answer === answer) {
+        alert("Correct!")
+    } else {
+        alert("Incorrect!")
     }
 
+    setNextQuestion()
 }
+
+function endQuiz() {
+    // hide quiz section
+    quizSection.setAttribute('class', 'hide');
+
+    endSection.removeAttribute('class');
+
+}
+
+startButton.onclick = startQuiz;
+questionChoices.onclick = answerQuestion
+
+
