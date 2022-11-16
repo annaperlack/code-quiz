@@ -29,6 +29,8 @@ var questions = [
 ]
 
 var currentQuestionIndex = 0;
+var clock = questions.length * 15;
+var timerId;
 
 var startSection = document.getElementById('start-screen')
 var startButton = document.getElementById('start');
@@ -36,8 +38,11 @@ var startButton = document.getElementById('start');
 var quizSection = document.getElementById('questions')
 var questionTitle = document.getElementById('question-title')
 var questionChoices = document.getElementById('choices')
+var clockEl = document.getElementById('time');
 
 var endSection = document.getElementById('end-screen')
+var submitBtn = document.getElementById('submit')
+var initialsEl = document.getElementById('initials')
 
 function getCurrentQuestion() {
     return questions[currentQuestionIndex]
@@ -77,13 +82,27 @@ function displayCurrentQuestion() {
 }
 
 function startQuiz() {
-    // hide initial section
+    // hide initial section\]
     startSection.setAttribute('class', 'hide');
 
     // show quiz section
-    quizSection.removeAttribute('class')
+    quizSection.removeAttribute('class');
+
+    // timer ticking every 1 second
+    timerId = setInterval(clockTick, 1000);
+
 
     displayCurrentQuestion()
+}
+
+function clockTick() {
+    clock--;
+    clockEl.textContent = clock;
+
+
+    if (time <= 0) {
+        endQuiz();
+      }
 }
 
 function answerQuestion(event) {
@@ -94,12 +113,15 @@ function answerQuestion(event) {
         alert("Correct!")
     } else {
         alert("Incorrect!")
+        clock -= 15;
     }
 
     setNextQuestion()
 }
 
 function endQuiz() {
+
+    clearInterval(timerId);
     // hide quiz section
     quizSection.setAttribute('class', 'hide');
 
@@ -107,7 +129,9 @@ function endQuiz() {
 
 }
 
+
 startButton.onclick = startQuiz;
-questionChoices.onclick = answerQuestion
+questionChoices.onclick = answerQuestion;
+submitBtn.onclick = saveHighscore;
 
 
