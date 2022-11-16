@@ -13,6 +13,16 @@ var questions = [
         title: "How do you comment within javascript?",
         options: ["**", "||", "//", "<>"],
         answer: "//"
+    },
+    {
+        title: "Which statement will return true in the console log?",
+        options: ["10==ten", "10===ten", "ten is equal to 10", "ten=10"],
+        answer: "10==ten"
+    },
+    {
+        title: "How do you link a Javascript file to a htmk document?",
+        options: [".js", ".jv", ".J", ".css"],
+        answer: ".js"
     }
 ]
 
@@ -21,17 +31,17 @@ var currentQuestionIndex = 0;
 var clock = questions.length * 15;
 var timerId;
 
-var startSection = document.getElementById('start-screen')
+var startSection = document.getElementById('start-screen');
 var startButton = document.getElementById('start');
 
-var quizSection = document.getElementById('questions')
-var questionTitle = document.getElementById('question-title')
-var questionChoices = document.getElementById('choices')
+var quizSection = document.getElementById('questions');
+var questionTitle = document.getElementById('question-title');
+var questionChoices = document.getElementById('choices');
 var clockEl = document.getElementById('time');
 
-var endSection = document.getElementById('end-screen')
-var submitBtn = document.getElementById('submit')
-var initialsEl = document.getElementById('initials')
+var endSection = document.getElementById('end-screen');
+var submitBtn = document.getElementById('submit');
+var initialsEl = document.getElementById('initials');
 var highScoreList = JSON.parse(localStorage.getItem("highScores")) || [];
 
 function getCurrentQuestion() {
