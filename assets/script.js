@@ -12,19 +12,19 @@
 
 var questions = [
     {
-        title: "What color is the sky?",
-        options: ["Blue", "Red"],
-        answer: "Blue"
+        title: "Which item is not a javascript value?",
+        options: ["Boolean", "Number", "String", "Zero"],
+        answer: "Zero"
     },
     {
-        title: "What color is the grass?",
-        options: ["Yellow", "Red", "Green"],
-        answer: "Green"
+        title: "What is the correct format for an array in javascript?",
+        options: ["(1, 2)", "[1, 2]", "1", "true"],
+        answer: "[1, 2]"
     },
     {
-        title: "What color is the sun?",
-        options: ["Blue", "Green", "Yellow", "Black"],
-        answer: "Yellow"
+        title: "How do you comment within javascript?",
+        options: ["**", "||", "//", "<>"],
+        answer: "//"
     }
 ]
 
@@ -43,6 +43,7 @@ var clockEl = document.getElementById('time');
 var endSection = document.getElementById('end-screen')
 var submitBtn = document.getElementById('submit')
 var initialsEl = document.getElementById('initials')
+var highScoreList = JSON.parse(localStorage.getItem("highScores")) || [];
 
 function getCurrentQuestion() {
     return questions[currentQuestionIndex]
@@ -127,11 +128,20 @@ function endQuiz() {
 
     endSection.removeAttribute('class');
 
+    var finalScoreEl = document.getElementById('final-score');
+    finalScoreEl.textContent = clock;
 }
 
 
 startButton.onclick = startQuiz;
 questionChoices.onclick = answerQuestion;
-submitBtn.onclick = saveHighscore;
+submitBtn.addEventListener("click", function() {
+    var playerInfo = {
+        initials: initialsEl.value,
+        score: clock,
+    }
+    highScoreList.push(playerInfo);
+    localStorage.setItem("highScores", JSON.stringify(highScoreList));
+})
 
 
