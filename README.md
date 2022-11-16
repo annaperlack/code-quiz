@@ -15,7 +15,7 @@ The user is able to click through different JavaScript related quiz questions. A
 
 [website](https://annaperlack.github.io/code-quiz/)
 
-![screenshot]()
+![screenshot](assets/screenshot-codequiz.png)
 
 
 ## Credits
