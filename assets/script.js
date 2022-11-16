@@ -141,6 +141,10 @@ submitBtn.addEventListener("click", function() {
     }
     highScoreList.push(playerInfo);
     localStorage.setItem("highScores", JSON.stringify(highScoreList));
+    
+    //redirect user to high score page
+    window.location.href = "highscores.html";
+
 })
 
 
